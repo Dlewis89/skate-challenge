@@ -2,8 +2,11 @@
 
 namespace Tests\Feature\App\Http\Controllers;
 
+use App\Models\Trick;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class TricksControllerTest extends TestCase
@@ -18,5 +21,18 @@ class TricksControllerTest extends TestCase
         $response = $this->getJson('/api/v1/tricks');
 
         $response->assertStatus(401);
+    }
+
+    public function test_a_user_can_generate_a_trick_successfully(): void
+    {
+      
+        Passport::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
+        $response = $this->getJson('api/v1/tricks', []);
+
+        $response->assertStatus(200);
     }
 }
