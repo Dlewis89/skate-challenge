@@ -19,7 +19,7 @@ class LoginControllerTest extends TestCase
 
         \Artisan::call('passport:install --force');
 
-        $response = $this->postJson('/auth/api/login', [
+        $response = $this->postJson('/api/v1/auth/login', [
             'email' => $user->email,
             'password' => 'password'
         ]);
@@ -38,7 +38,7 @@ class LoginControllerTest extends TestCase
 
         \Artisan::call('passport:install --force');
 
-        $response = $this->postJson('/auth/api/login', [
+        $response = $this->postJson('api/v1/auth/login', [
             'password' => 'password'
         ]);
 
@@ -61,7 +61,7 @@ class LoginControllerTest extends TestCase
 
         \Artisan::call('passport:install --force');
 
-        $response = $this->postJson('/auth/api/login', [
+        $response = $this->postJson('/api/v1/auth/login', [
             'email' => $user->email
         ]);
 

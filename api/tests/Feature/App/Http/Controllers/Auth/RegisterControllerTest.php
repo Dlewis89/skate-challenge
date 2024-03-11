@@ -29,7 +29,7 @@ class RegisterControllerTest extends TestCase
      */
     public function test_user_can_register_successfully(): void
     {
-        $response = $this->postJson('/auth/api/register', $this->data);
+        $response = $this->postJson('api/v1/auth/register', $this->data);
 
         $response->assertStatus(201);
     }
@@ -38,7 +38,7 @@ class RegisterControllerTest extends TestCase
     {
         unset($this->data['name']);
 
-        $response = $this->postJson('/auth/api/register', $this->data);
+        $response = $this->postJson('/api/v1/auth/register', $this->data);
 
         $response
             ->assertStatus(422)
@@ -56,7 +56,7 @@ class RegisterControllerTest extends TestCase
     {
         unset($this->data['email']);
 
-        $response = $this->postJson('/auth/api/register', $this->data);
+        $response = $this->postJson('/api/v1/auth/register', $this->data);
 
         $response
             ->assertStatus(422)
@@ -74,7 +74,7 @@ class RegisterControllerTest extends TestCase
     {
         unset($this->data['password']);
 
-        $response = $this->postJson('/auth/api/register', $this->data);
+        $response = $this->postJson('/api/v1/auth/register', $this->data);
 
         $response
             ->assertStatus(422)
@@ -92,7 +92,7 @@ class RegisterControllerTest extends TestCase
     {
         unset($this->data['password_confirmation']);
 
-        $response = $this->postJson('/auth/api/register', $this->data);
+        $response = $this->postJson('/api/v1/auth/register', $this->data);
 
         $response
             ->assertStatus(422)
@@ -108,9 +108,9 @@ class RegisterControllerTest extends TestCase
 
     public function test_user_can_not_register_with_a_duplicate_email(): void
     {
-        $this->postJson('/auth/api/register', $this->data);
+        $this->postJson('/api/v1/auth/register', $this->data);
 
-        $response = $this->postJson('/auth/api/register', $this->data);
+        $response = $this->postJson('/api/v1/auth/register', $this->data);
 
         $response
             ->assertStatus(422)
