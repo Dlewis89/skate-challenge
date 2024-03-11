@@ -9,6 +9,8 @@ class TricksController extends Controller
 {
     public function index(Request $request)
     {
-        return Trick::inRandomOrder()->limit(1)->get();
+        return response()->json([
+            'trick' => Trick::inRandomOrder()->limit(1)->get()
+        ]);
     }
 }
