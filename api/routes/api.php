@@ -3,8 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\TricksController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +23,13 @@ use App\Http\Controllers\Auth\LoginController;
 //     return $request->user();
 // });
 
-Route::post('register', [RegisterController::class, 'create'])->prefix('auth');
-Route::post('login', [LoginController::class, 'login'])->prefix('auth');
+Route::prefix('auth')->group(function() {
+    Route::post('register', [RegisterController::class, 'create']);
+    Route::post('login', [LoginController::class, 'login']);
+});
+
+
+Route::prefix('tricks')->middleware('auth:api')->group(function() {
+    Route::get('/', [TricksController::class, 'index']);
+});
 
