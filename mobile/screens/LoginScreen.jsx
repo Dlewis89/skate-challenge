@@ -1,27 +1,31 @@
 import axios from 'axios'
+import * as SecureStore from 'expo-secure-store';
 import { React, useState }  from 'react'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-
-async function handleLogin(email, password) {
-
-    try {
-        const response = await axios.post('https://d9d3-2603-6081-943d-5ac5-00-1569.ngrok-free.app/api/v1/auth/login', {
-            email,
-            password
-        });
-
-        console.log(response.data);
-    } catch(e) {
-        // Handle failed logins here
-
-        console.log(e.message);
-    }
-    
-}
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    async function handleLogin(email, password) {
+
+        try {
+            const response = await axios.post('https://d9d3-2603-6081-943d-5ac5-00-1569.ngrok-free.app/api/v1/auth/login', {
+                email,
+                password
+            });
+    
+            // save token to localStorage
+            const jwtToken = response.data.user.token
+    
+            SecureStore.setItemAsync('skate-challenge-token', jwtToken)
+            
+            navigation.navigate('WelcomeScreen')
+        } catch(e) {
+            Alert.alert('Login Failed', 'User email or password is incorrect')
+        }
+        
+    }
 
     return (
         <View style={styles.viewContainer}>
