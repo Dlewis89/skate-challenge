@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\App\Http\Controllers;
 
-use App\Models\Trick;
 use App\Models\User;
+use Database\Seeders\TrickSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
@@ -11,6 +11,9 @@ use Tests\TestCase;
 
 class TricksControllerTest extends TestCase
 {
+    protected $seed = true;
+
+    protected $seeder = TrickSeeder::class;
 
     use RefreshDatabase;
     /**
@@ -33,6 +36,13 @@ class TricksControllerTest extends TestCase
 
         $response = $this->getJson('api/v1/tricks', []);
 
-        $response->assertStatus(200);
+        $trick_name = $response->decodeResponseJson()['trick']['name'];
+
+        $this->assertDatabaseHas('tricks', [
+            'name' => $trick_name
+        ]);
+
+        $response
+            ->assertStatus(200);
     }
 }
