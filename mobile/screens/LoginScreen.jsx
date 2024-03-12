@@ -1,7 +1,27 @@
-import React from 'react'
+import axios from 'axios'
+import { React, useState }  from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
+async function handleLogin(email, password) {
+
+    try {
+        const response = await axios.post('https://d9d3-2603-6081-943d-5ac5-00-1569.ngrok-free.app/api/v1/auth/login', {
+            email,
+            password
+        });
+
+        console.log(response.data);
+    } catch(e) {
+        // Handle failed logins here
+
+        console.log(e.message);
+    }
+    
+}
+
 export default function LoginScreen({ navigation }) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     return (
         <View style={styles.viewContainer}>
@@ -10,13 +30,22 @@ export default function LoginScreen({ navigation }) {
             </View>
             <View style={styles.formContainer}>
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.input} placeholder='Email'></TextInput>
+                    <TextInput
+                        onChangeText={email => setEmail(email)}
+                        style={styles.input} 
+                        placeholder='Email'
+                    />
                 </View>
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.input} placeholder='Password'></TextInput>
+                    <TextInput
+                        onChangeText={password => setPassword(password)}
+                        secureTextEntry={true}
+                        style={styles.input} 
+                        placeholder='Password'
+                    />
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => handleLogin(email, password)}>
                         <Text style={styles.buttonText}>Login</Text>
                     </TouchableOpacity>
                 </View>
