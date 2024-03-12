@@ -1,3 +1,4 @@
+import { API_URL } from '@env'
 import axios from 'axios'
 import * as SecureStore from 'expo-secure-store';
 import { React, useState }  from 'react'
@@ -10,7 +11,7 @@ export default function LoginScreen({ navigation }) {
     async function handleLogin() {
 
         try {
-            const response = await axios.post('https://d9d3-2603-6081-943d-5ac5-00-1569.ngrok-free.app/api/v1/auth/login', {
+            const response = await axios.post(`${API_URL}/api/v1/auth/login`, {
                 email,
                 password
             });
