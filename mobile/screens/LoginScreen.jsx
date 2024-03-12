@@ -7,7 +7,7 @@ export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    async function handleLogin(email, password) {
+    async function handleLogin() {
 
         try {
             const response = await axios.post('https://d9d3-2603-6081-943d-5ac5-00-1569.ngrok-free.app/api/v1/auth/login', {
@@ -49,7 +49,7 @@ export default function LoginScreen({ navigation }) {
                     />
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={() => handleLogin(email, password)}>
+                    <TouchableOpacity style={styles.button} onPress={handleLogin}>
                         <Text style={styles.buttonText}>Login</Text>
                     </TouchableOpacity>
                 </View>
