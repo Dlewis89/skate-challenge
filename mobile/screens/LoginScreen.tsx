@@ -43,7 +43,7 @@ export default function LoginScreen<RootStackParamList>(props: Props) {
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>Skate Challenge</Text>
             </View>
-            <View style={styles.formContainer}>
+            <View>
                 <View style={styles.inputContainer}>
                     <TextInput
                         onChangeText={email => setEmail(email)}
@@ -75,10 +75,10 @@ export default function LoginScreen<RootStackParamList>(props: Props) {
 const styles = StyleSheet.create({
     viewContainer: {
         flex: 1,
-        padding: 20
+        padding: 20,
+        justifyContent: 'space-evenly'
     },
     titleContainer: {
-        flex: 1,
         justifyContent: 'center'
     },
     title: {
@@ -88,9 +88,6 @@ const styles = StyleSheet.create({
       color: '#fda53e',
       borderBottomWidth: 3,
       borderBottomColor: '#fda53e'
-    },
-    formContainer: {
-        flex: 2,
     },
     inputContainer: {
         elevation: 1,
@@ -103,7 +100,6 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     buttonContainer: {
-        flex: 1,
         padding: 20,
         justifyContent: 'center'
     },
