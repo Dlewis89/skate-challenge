@@ -1,13 +1,13 @@
-<p style="text-align: center; color: orange;font-size: 48px">Local Setup</p> 
+# <p align="center">Local Setup</p> 
 
-## <p style="color: orange">Technologies Needed</p>
+## Technologies Needed
 
 - [Git](https://git-scm.com/)
 - [Docker](https://docs.docker.com/) ( If using Laravel Sail )
 - [Composer 2](https://getcomposer.org/)
 - [Php 8.2](https://www.php.net/)
 
-## <p style="color: orange">Instructions</p>
+## Instructions
 1. Clone the Github Repo using the following command below
     ```sh
     $ git clone https://github.com/Dlewis89/skate-challenge.git
