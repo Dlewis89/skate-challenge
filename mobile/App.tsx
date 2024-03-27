@@ -9,7 +9,13 @@ import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import WelcomeScreen from './screens/WelcomeScreen'
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  RegisterScreen: undefined;
+  LoginScreen: undefined;
+  WelcomeScreen: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (

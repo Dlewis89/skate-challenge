@@ -1,17 +1,27 @@
-import { API_URL } from '@env'
+import { API_BASE } from '@env'
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import axios from 'axios'
 import * as SecureStore from 'expo-secure-store';
-import { React, useState }  from 'react'
+import React, { useState }  from 'react'
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-export default function LoginScreen({ navigation }) {
+export type RootStackParamList = {
+    RegisterScreen: undefined;
+    LoginScreen: undefined;
+    WelcomeScreen: undefined;
+};
+  
+type Props = NativeStackScreenProps<RootStackParamList, "LoginScreen">;
+
+
+export default function LoginScreen<RootStackParamList>(props: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     async function handleLogin() {
 
         try {
-            const response = await axios.post(`${API_URL}/api/v1/auth/login`, {
+            const response = await axios.post(`${API_BASE}/api/v1/auth/login`, {
                 email,
                 password
             });
@@ -21,7 +31,7 @@ export default function LoginScreen({ navigation }) {
     
             SecureStore.setItemAsync('skate-challenge-token', jwtToken)
             
-            navigation.navigate('WelcomeScreen')
+            props.navigation.push('WelcomeScreen')
         } catch(e) {
             Alert.alert('Login Failed', 'User email or password is incorrect')
         }
@@ -56,7 +66,7 @@ export default function LoginScreen({ navigation }) {
                 </View>
             </View>
             <View style={styles.footer}>
-                <Text style={styles.footerText}>Don't have an account? <Text style={styles.registerText} onPress={() => navigation.navigate('RegisterScreen') }>Sign Up</Text></Text>
+                <Text>Don't have an account? <Text style={styles.registerText} onPress={() => props.navigation.push('RegisterScreen') }>Sign Up</Text></Text>
             </View>
         </View>
     )
