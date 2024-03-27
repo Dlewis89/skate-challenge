@@ -38,11 +38,11 @@ class LoginController extends Controller
                 'user' => $user_with_token
             ]);
         } catch(Exception $e) {
-            Log::error('Unable to generate a trick for the user');
+            Log::error('email or password is incorrect');
 
             return response()->json([
                 'status' => false,
-                'message' => 'Unable to generate a trick for the user'
+                'message' => 'email or password is incorrect'
             ], 500);
         }
 
