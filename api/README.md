@@ -1,4 +1,4 @@
-<p style="text-align: center; color: orange;font-size: 48px">Skate Challenge</p> 
+# <p style="text-align: center;">Skate Challenge</p> 
 
 ## <p style="color: orange">Building the Project</p>
 
