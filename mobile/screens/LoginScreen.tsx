@@ -3,7 +3,10 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import axios from 'axios'
 import * as SecureStore from 'expo-secure-store';
 import React, { useState }  from 'react'
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, View } from 'react-native'
+
+import { colors } from '../utils/colors'
+import { fontSizes, marginSizes, paddingSizes } from '../utils/sizes';
 
 export type RootStackParamList = {
     RegisterScreen: undefined;
@@ -39,7 +42,7 @@ export default function LoginScreen<RootStackParamList>(props: Props) {
     }
 
     return (
-        <View style={styles.viewContainer}>
+        <SafeAreaView style={styles.viewContainer}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>Skate Challenge</Text>
             </View>
@@ -68,58 +71,56 @@ export default function LoginScreen<RootStackParamList>(props: Props) {
             <View style={styles.footer}>
                 <Text>Don't have an account? <Text style={styles.registerText} onPress={() => props.navigation.push('RegisterScreen') }>Sign Up</Text></Text>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     viewContainer: {
         flex: 1,
-        padding: 20,
+        backgroundColor: colors.textPrimary,
+        padding: paddingSizes.md,
         justifyContent: 'space-evenly'
     },
     titleContainer: {
         justifyContent: 'center'
     },
     title: {
-      fontSize: 45,
+      fontSize: fontSizes.xxl,
       textAlign: 'center',
       fontWeight: '900',
-      color: '#fda53e',
+      color: colors.primary,
       borderBottomWidth: 3,
-      borderBottomColor: '#fda53e'
+      borderBottomColor: colors.primary
     },
     inputContainer: {
         elevation: 1,
         backgroundColor: '#fff',
-        marginBottom: 20
+        marginBottom: marginSizes.lg
     },
     input: {
-        height: 40,
-        margin: 12,
-        padding: 10,
+        padding: paddingSizes.md,
     },
     buttonContainer: {
-        padding: 20,
+        padding: paddingSizes.lg,
         justifyContent: 'center'
     },
     button: {
-        backgroundColor: '#fda53e',
-        padding: 15,
+        backgroundColor: colors.primary,
+        padding: paddingSizes.md,
         borderRadius: 50
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: fontSizes.lg,
         textAlign: 'center',
         color: '#fff',
         fontWeight: '700'
     },
     footer: {
-        paddingBottom: 30,
         alignItems: 'center',
     },
     registerText: {
-        color: '#fda53e',
+        color: colors.primary,
         fontWeight: '700'
     }
   });
