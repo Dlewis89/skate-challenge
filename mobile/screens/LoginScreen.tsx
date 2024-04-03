@@ -1,6 +1,6 @@
 import { API_BASE } from '@env'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import axios from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState }  from 'react'
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, View } from 'react-native'
@@ -16,6 +16,11 @@ export type RootStackParamList = {
   
 type Props = NativeStackScreenProps<RootStackParamList, "LoginScreen">;
 
+// Create an Axios instance
+const axiosInstance: AxiosInstance = axios.create({
+    baseURL: API_BASE
+  });
+
 async function handleLogin(email: string, password: string, props: Props) {
     try {
         const response = await axios.post(`${API_BASE}/api/v1/auth/login`, {
@@ -26,6 +31,24 @@ async function handleLogin(email: string, password: string, props: Props) {
         // Save token to SecureStore
         const jwtToken: string = response.data.user.token;
         await SecureStore.setItemAsync('skate-challenge-token', jwtToken);
+
+        // Add a request interceptor
+        axiosInstance.interceptors.request.use(
+            async (config: InternalAxiosRequestConfig<any>) => {
+                // Retrieve the JWT token from SecureStore
+                const token: string | null = await SecureStore.getItemAsync('skate-challenge-token');
+            
+                if (token) {
+                    // Attach the token to the request headers
+                    config.headers.Authorization = `Bearer ${token}`;
+                }
+            
+                return config;
+            },
+            (error: AxiosError) => {
+                return Promise.reject(error);
+            }
+        );
 
         // Navigate to WelcomeScreen
         props.navigation.push('WelcomeScreen');
