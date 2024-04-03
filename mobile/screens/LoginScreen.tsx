@@ -16,30 +16,33 @@ export type RootStackParamList = {
   
 type Props = NativeStackScreenProps<RootStackParamList, "LoginScreen">;
 
+async function handleLogin(email: string, password: string, props: Props) {
+    try {
+        const response = await axios.post(`${API_BASE}/api/v1/auth/login`, {
+            email,
+            password
+        });
+
+        // Save token to SecureStore
+        const jwtToken: string = response.data.user.token;
+        await SecureStore.setItemAsync('skate-challenge-token', jwtToken);
+
+        // Navigate to WelcomeScreen
+        props.navigation.push('WelcomeScreen');
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
+            // Handle login failure
+            Alert.alert('Login Failed', 'User email or password is incorrect');
+        } else {
+            Alert.alert('Registration failed', 'An unexpected error occurred. Please try again later.');
+        }
+    }
+}
+
 
 export default function LoginScreen<RootStackParamList>(props: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    async function handleLogin() {
-
-        try {
-            const response = await axios.post(`${API_BASE}/api/v1/auth/login`, {
-                email,
-                password
-            });
-    
-            // save token to localStorage
-            const jwtToken = response.data.user.token
-    
-            SecureStore.setItemAsync('skate-challenge-token', jwtToken)
-            
-            props.navigation.push('WelcomeScreen')
-        } catch(e) {
-            Alert.alert('Login Failed', 'User email or password is incorrect')
-        }
-        
-    }
 
     return (
         <SafeAreaView style={styles.viewContainer}>
@@ -63,7 +66,7 @@ export default function LoginScreen<RootStackParamList>(props: Props) {
                     />
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                    <TouchableOpacity style={styles.button} onPress={() => handleLogin(email, password, props)}>
                         <Text style={styles.buttonText}>Login</Text>
                     </TouchableOpacity>
                 </View>
