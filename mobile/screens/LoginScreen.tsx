@@ -30,15 +30,19 @@ async function handleLogin(email: string, password: string, props: Props) {
         // Navigate to WelcomeScreen
         props.navigation.push('WelcomeScreen');
     } catch (error) {
-        // Handle login failure
-        Alert.alert('Login Failed', 'User email or password is incorrect');
+        if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
+            // Handle login failure
+            Alert.alert('Login Failed', 'User email or password is incorrect');
+        } else {
+            Alert.alert('Registration failed', 'An unexpected error occurred. Please try again later.');
+        }
     }
 }
 
 
 export default function LoginScreen<RootStackParamList>(props: Props) {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     return (
         <SafeAreaView style={styles.viewContainer}>

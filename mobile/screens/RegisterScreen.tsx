@@ -55,10 +55,10 @@ async function handleRegistration(formData: RegisterFormData, props: Props) {
 }
 
 export default function RegisterScreen<RootStackParamList>(props: Props) {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [passwordConfirmation, setPasswordConfirmation] = useState('')
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
