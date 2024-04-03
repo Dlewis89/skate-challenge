@@ -31,7 +31,7 @@ async function handleRegistration(formData: RegisterFormData, props: Props) {
             throw new Error('Passwords do not match');
         }
 
-        const response = await axios.post(`${API_BASE}/api/v1/auth/register`, {
+        const response = await axios.post(`${API_BASE}/auth/register`, {
             name,
             email,
             password,

@@ -23,7 +23,7 @@ const axiosInstance: AxiosInstance = axios.create({
 
 async function handleLogin(email: string, password: string, props: Props) {
     try {
-        const response = await axios.post(`${API_BASE}/api/v1/auth/login`, {
+        const response = await axios.post(`${API_BASE}/auth/login`, {
             email,
             password
         });
@@ -55,7 +55,7 @@ async function handleLogin(email: string, password: string, props: Props) {
     } catch (error) {
         if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
             // Handle login failure
-            Alert.alert('Login Failed', 'User email or password is incorrect');
+            Alert.alert('Login Failed', error.response.data.message);
         } else {
             Alert.alert('Registration failed', 'An unexpected error occurred. Please try again later.');
         }
