@@ -55,9 +55,9 @@ async function handleLogin(email: string, password: string, props: Props) {
     } catch (error) {
         if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
             // Handle login failure
-            Alert.alert('Login Failed', error.response.data.message);
+            Alert.alert('Login Failed', 'Email or password is incorrect. Please try again.');
         } else {
-            Alert.alert('Registration failed', 'An unexpected error occurred. Please try again later.');
+            Alert.alert('Login Failed', 'An unexpected error occurred. Please try again later.');
         }
     }
 }
