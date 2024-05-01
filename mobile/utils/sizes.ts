@@ -33,3 +33,12 @@ export const marginSizes: ISizing = {
     xxl: 40,
     xxxl: 60
 }
+
+export const iconSizes: ISizing = {
+    sm: 8,
+    md: 12,
+    lg: 18,
+    xl: 24,
+    xxl: 40,
+    xxxl: 60
+}
