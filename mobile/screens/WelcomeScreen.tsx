@@ -3,7 +3,9 @@ import {Text, View} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSnowboarding } from '@fortawesome/free-solid-svg-icons/faSnowboarding'
+import { faSnowboarding } from '@fortawesome/free-solid-svg-icons/faSnowboarding';
+import { colors } from '../utils/colors';
+import { fontSizes, iconSizes } from '../utils/sizes';
 
 import TrickSelectorScreen from './TrickSelectorScreen';
 
@@ -14,22 +16,14 @@ export default function WelcomeScreen() {
         <SafeAreaView style={{ flex: 1}}>
             <Tab.Navigator
                 screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
-                        let iconName;
-
-                        if (route.name === 'Trick') {
-                        iconName = focused
-                            ? 'ios-information-circle'
-                            : 'ios-information-circle-outline';
-                        } else if (route.name === 'Settings') {
-                        iconName = focused ? 'ios-list' : 'ios-list-outline';
-                        }
-
-                        // You can return any component that you like here!
-                        return <FontAwesomeIcon icon={faSnowboarding} size={size} color={color} />;
+                    tabBarIcon: (focused) => {
+                        return <FontAwesomeIcon icon={faSnowboarding} size={iconSizes.lg} color={focused ? colors.primary : colors.secondary} />;
                     },
-                    tabBarActiveTintColor: 'tomato',
-                    tabBarInactiveTintColor: 'gray',
+                    tabBarActiveTintColor: colors.primary,
+                    tabBarInactiveTintColor: colors.textPrimary,
+                    tabBarLabelStyle: {
+                        fontSize: fontSizes.md,
+                    },
                 })}
             >
             <Tab.Screen name="Trick Selector" component={TrickSelectorScreen} />

@@ -14,6 +14,7 @@ class TricksController extends Controller
     {
 
         return response()->json([
+            'user' => Auth::user(),
             'stance' => Stance::inRandomOrder()->limit(1)->first(),
             'trick' => Trick::inRandomOrder()->limit(1)->first()
         ]);

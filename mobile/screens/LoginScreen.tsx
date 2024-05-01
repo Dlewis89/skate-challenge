@@ -5,61 +5,26 @@ import * as SecureStore from 'expo-secure-store';
 import React, { useState }  from 'react'
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView, View } from 'react-native'
 
+
+import type { RootStackParamList } from '../types/rootStackParamList.type';
 import { colors } from '../utils/colors'
 import { fontSizes, marginSizes, paddingSizes } from '../utils/sizes';
-
-export type RootStackParamList = {
-    RegisterScreen: undefined;
-    LoginScreen: undefined;
-    WelcomeScreen: undefined;
-};
+import { skateChallengeApi } from '../api/skateChallengeApi';
   
 type Props = NativeStackScreenProps<RootStackParamList, "LoginScreen">;
 
-// Create an Axios instance
-const axiosInstance: AxiosInstance = axios.create({
-    baseURL: API_BASE
-  });
-
 async function handleLogin(email: string, password: string, props: Props) {
-    try {
-        const response = await axios.post(`${API_BASE}/auth/login`, {
-            email,
-            password
-        });
+        
+    const response = await skateChallengeApi('auth/login', {email, password}, props)
 
-        // Save token to SecureStore
-        const jwtToken: string = response.data.user.token;
-        await SecureStore.setItemAsync('skate-challenge-token', jwtToken);
+    console.log(response)
 
-        // Add a request interceptor
-        axiosInstance.interceptors.request.use(
-            async (config: InternalAxiosRequestConfig<any>) => {
-                // Retrieve the JWT token from SecureStore
-                const token: string | null = await SecureStore.getItemAsync('skate-challenge-token');
-            
-                if (token) {
-                    // Attach the token to the request headers
-                    config.headers.Authorization = `Bearer ${token}`;
-                }
-            
-                return config;
-            },
-            (error: AxiosError) => {
-                return Promise.reject(error);
-            }
-        );
-
-        // Navigate to WelcomeScreen
+    if(response?.status == 200) {
+        console.log(response.data)
+        await SecureStore.setItemAsync('skate-challenge-token', response.data.user.token)
         props.navigation.push('WelcomeScreen');
-    } catch (error) {
-        if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
-            // Handle login failure
-            Alert.alert('Login Failed', 'Email or password is incorrect. Please try again.');
-        } else {
-            Alert.alert('Login Failed', 'An unexpected error occurred. Please try again later.');
-        }
     }
+
 }
 
 
