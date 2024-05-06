@@ -8,29 +8,31 @@ import { RootStackParamList } from "../types/rootStackParamList.type";
    
 type Props = NativeStackScreenProps<RootStackParamList, "LoginScreen">;
 
-export const skateChallengeApi = async (route: string, data: object = {}, props: Props | null) => {
+export const skateChallengeApi = async (method: string, route: string, data: object = {}, props: Props | null = null) => {
     try {
-        const token = SecureStore.getItem('skate-challenge-token');
+        const token = await SecureStore.getItemAsync('skate-challenge-token');
 
         if(!token && props) {
             props.navigation.navigate('LoginScreen')
+            return;
         }
 
-        const response = await axiosInstance.post(route, {
+        console.log(data)
+
+        const response = await axiosInstance(route, {
+            method,
             headers: {
-                'Content-Type': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`
             },
-            ...data
+            data
         })
 
         return response
     } catch (error) {
         if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
             console.log(error.response.data)
-            // Handle login failure
-            Alert.alert('Login Failed', 'Email or password is incorrect. Please try again.');
-        } else {
-            Alert.alert('Login Failed', 'An unexpected error occurred. Please try again later.');
         }
     }
 }
