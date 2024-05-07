@@ -18,21 +18,21 @@ async function handleGetTrickPress() {
     try {
         const response= await skateChallengeApi('get', '/tricks');
 
-        console.log(response);
     } catch (error) {
         if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
             // Handle login failure
-            console.log(error.response.data.message)
             Alert.alert('Get Trick Failed', 'An unexpected error occurred. Please try again later.');
         }
     }
 }
 
 export default function TrickSelectorScreen() {
+    const [trick, setTrick] = ''
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.trickContainer}>
-                <Text style={styles.trick}>Kickflip</Text>
+                <Text style={styles.trick}>{trick}</Text>
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleGetTrickPress}>
