@@ -28,14 +28,14 @@ services:
     image: 'redis:latest'
     networks:
       - laravel
-  worker:
-    build:
-      context: .
-      dockerfile: Dockerfile.worker
-    volumes:
-      - .:/var/www/html
-    working_dir: /var/www/html
-    networks:
-      - laravel
+  # worker:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.worker
+  #   volumes:
+  #     - .:/var/www/html
+  #   working_dir: /var/www/html
+  #   networks:
+  #     - laravel
 networks:
   laravel:
