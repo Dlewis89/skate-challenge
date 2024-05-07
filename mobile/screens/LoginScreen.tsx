@@ -15,12 +15,9 @@ type Props = NativeStackScreenProps<RootStackParamList, "LoginScreen">;
 
 async function handleLogin(email: string, password: string, props: Props) {
         
-    const response = await skateChallengeApi('auth/login', {email, password}, props)
-
-    console.log(response)
+    const response = await skateChallengeApi('post', 'auth/login', {email, password}, props)
 
     if(response?.status == 200) {
-        console.log(response.data)
         await SecureStore.setItemAsync('skate-challenge-token', response.data.user.token)
         props.navigation.push('WelcomeScreen');
     }

@@ -4,9 +4,9 @@ import * as SecureStore from 'expo-secure-store';
 import { API_BASE } from '@env'
 import { Alert, StyleSheet, TouchableOpacity, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import axiosInstance from '../utils/axiosInstance';
 import { colors } from '../utils/colors'
 import { fontSizes, paddingSizes } from '../utils/sizes';
+import { skateChallengeApi } from '../api/skateChallengeApi';
 
 type trickResponseProps = {
     user: object,
@@ -16,25 +16,23 @@ type trickResponseProps = {
 
 async function handleGetTrickPress() {
     try {
+        const response= await skateChallengeApi('get', '/tricks');
 
-
-        const response: trickResponseProps = await axiosInstance.get(`/tricks`);
-
-        console.log(response);
     } catch (error) {
         if (axios.isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
             // Handle login failure
-            console.log(error.response.data.message)
             Alert.alert('Get Trick Failed', 'An unexpected error occurred. Please try again later.');
         }
     }
 }
 
 export default function TrickSelectorScreen() {
+    const [trick, setTrick] = ''
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.trickContainer}>
-                <Text style={styles.trick}>Kickflip</Text>
+                <Text style={styles.trick}>{trick}</Text>
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleGetTrickPress}>
