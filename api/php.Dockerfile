@@ -11,9 +11,11 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip
 
-RUN pecl install --force redis \
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+RUN pecl install --force redis\
 && rm -rf /tmp/pear \
-&& docker-php-ext-enable redis
+&& docker-php-ext-enable redis pdo_mysql
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
