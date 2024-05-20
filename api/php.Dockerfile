@@ -26,8 +26,8 @@ RUN pecl install --force redis\
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-RUN groupadd --gid 1000 demetrius \
- && useradd --uid 1000 -g demetrius \
+RUN groupadd --gid 1002 demetrius \
+ && useradd --uid 1002 -g demetrius \
  -G www-data,root --shell /bin/bash \
  --create-home demetrius
 
