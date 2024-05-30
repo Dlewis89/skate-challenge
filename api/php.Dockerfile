@@ -25,10 +25,3 @@ RUN pecl install --force redis\
 && docker-php-ext-enable redis pdo pdo_pgsql pgsql
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-
-RUN groupadd --gid 1002 demetrius \
- && useradd --uid 1002 -g demetrius \
- -G www-data,root --shell /bin/bash \
- --create-home demetrius
-
-USER demetrius
