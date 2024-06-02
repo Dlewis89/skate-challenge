@@ -25,3 +25,5 @@ RUN pecl install --force redis\
 && docker-php-ext-enable redis pdo pdo_pgsql pgsql
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+CMD ['git', 'clone', 'https://github.com/Dlewis89/skate-challenge.git']
